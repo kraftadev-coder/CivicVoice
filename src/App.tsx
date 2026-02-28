@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Home from './pages/Home';
 import Report from './pages/Report';
 import Profile from './pages/Profile';
+import Guide from './pages/Guide';
 
 // Lazy load admin dashboard — separate chunk, only loaded when /admin is accessed
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
@@ -36,6 +37,7 @@ const App: React.FC = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/report" element={<Report />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/guide" element={<Guide />} />
                 </Routes>
               </AppShell>
             }
