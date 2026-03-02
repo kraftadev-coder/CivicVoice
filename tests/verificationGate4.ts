@@ -107,7 +107,7 @@ async function runAll() {
         assert(METADATA_HEADERS.includes('cf-ray'), 'METADATA_HEADERS must include cf-ray');
 
         // Create a mock request with PII headers
-        const mockRequest = new Request('https://civicvoice.pages.dev/api/report', {
+        const mockRequest = new Request('https://govoicing.com/api/report', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

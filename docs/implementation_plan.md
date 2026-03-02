@@ -1,4 +1,4 @@
-# CivicVoice — Modular Implementation Plan
+# GoVoicing — Modular Implementation Plan
 
 > **Goal**: Build a production-ready civic whistleblowing platform on Cloudflare's edge stack (Pages, Workers, D1, R2) with an "Editorial Brutalism" UI, zero-knowledge anonymity, and verified media evidence.
 
@@ -10,11 +10,11 @@
 
 | Doc | Role |
 |---|---|
-| [Technical Blueprint](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/CivicVoice_Technical_Blueprint_Cloudflare.md) | Architecture, D1 schema, R2 storage, CI/CD |
-| [Security & Edge Cases](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/CivicVoice_Security_EdgeCase_Protocol.md) | Amnesia protocol, anti-spoofing, cost defense |
-| [UI/UX Strategy](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/CivicVoice_UIUX_Strategy.md) | Editorial Brutalism aesthetic, motion, typography |
-| [Component Spec](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/CivicVoice_Component_Spec.md) | CSS variables, Witness Card, Witness Cam, Amnesia Audit |
-| [Feature Goal Matrix](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/CivicVoice_Feature_Goal_Matrix.md) | Feature→Goal mapping, constraints |
+| [Technical Blueprint](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/GoVoicing_Technical_Blueprint_Cloudflare.md) | Architecture, D1 schema, R2 storage, CI/CD |
+| [Security & Edge Cases](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/GoVoicing_Security_EdgeCase_Protocol.md) | Amnesia protocol, anti-spoofing, cost defense |
+| [UI/UX Strategy](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/GoVoicing_UIUX_Strategy.md) | Editorial Brutalism aesthetic, motion, typography |
+| [Component Spec](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/GoVoicing_Component_Spec.md) | CSS variables, Witness Card, Witness Cam, Amnesia Audit |
+| [Feature Goal Matrix](file:///c:/Users/User/Desktop/CivicVoice/CivicVoice/GoVoicing_Feature_Goal_Matrix.md) | Feature→Goal mapping, constraints |
 
 ## Infrastructure Status
 
@@ -24,7 +24,7 @@
 | Cloudflare MCP | ✅ Connected | D1/KV/Workers accessible via MCP |
 | D1 Database | 🔲 Not created yet | Will create in Module 5 via MCP |
 | R2 Storage | ⏳ Deferred | Requires credit card — enable before Module 5 |
-| Domain | 🔲 Using `*.pages.dev` | Buy `civicvoice.ng` before production |
+| Domain | 🔲 Using `*.pages.dev` | Production domain: `govoicing.com` |
 
 > [!WARNING]
 > **R2 must be enabled before starting Module 5.** Modules 0–4 can be built without it.
@@ -340,7 +340,7 @@ graph TD
 - Store in-progress "Proof" in IndexedDB until 200 OK received
 
 #### [NEW] `src/lib/resilience/mirrorSwitch.ts`
-- If `civicvoice.ng` returns 502/timeout, auto-switch to secondary `worker.dev` mirror endpoint
+- If `govoicing.com` returns 502/timeout, auto-switch to secondary `worker.dev` mirror endpoint
 - Client-side failover with exponential backoff
 
 #### [NEW] `workers/api/audioGate.ts`
@@ -505,10 +505,10 @@ graph TD
 
 ### 2. Domain: **`*.pages.dev`** for testing ✅
 
-- Cloudflare Pages provides a **free subdomain**: `civicvoice.pages.dev`
-- Every PR gets a **unique preview URL**: `abc123.civicvoice.pages.dev`
+- Cloudflare Pages provides a **free subdomain**: `govoicing.pages.dev`
+- Every PR gets a **unique preview URL**: `abc123.govoicing.pages.dev`
 - Workers get `*.workers.dev` endpoints
-- **No domain purchase needed until production launch** — just point `civicvoice.ng` to Cloudflare when ready
+- **Production domain**: `govoicing.com` — point to Cloudflare when ready
 
 ### 3. Database: **Cloudflare D1** ✅ (not Firebase or Supabase)
 

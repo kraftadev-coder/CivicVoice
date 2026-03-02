@@ -62,7 +62,7 @@ export interface UploadResult {
 
 /* ─── Constants ─── */
 
-const DB_NAME = 'civicvoice_uploads';
+const DB_NAME = 'govoicing_uploads';
 const DB_VERSION = 1;
 const STORE_NAME = 'pending_uploads';
 const MAX_RETRY_ATTEMPTS = 5;

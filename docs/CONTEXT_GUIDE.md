@@ -1,4 +1,4 @@
-# CivicVoice — New Chat Context Guide
+# GoVoicing — New Chat Context Guide
 
 > **Purpose**: Read this file at the start of every new chat to get full project context.
 
@@ -23,11 +23,11 @@ Update docs/task.md when done.
 ### 2. Design Documents (Source of Truth)
 | File | What it contains |
 |------|-----------------|
-| `CivicVoice_Technical_Blueprint_Cloudflare.md` | Architecture — Cloudflare Pages, Workers, D1, R2 |
-| `CivicVoice_Security_EdgeCase_Protocol.md` | Amnesia Protocol, anti-spoofing, cost defense |
-| `CivicVoice_UIUX_Strategy.md` | Editorial Brutalism design language |
-| `CivicVoice_Component_Spec.md` | CSS variables, component specs |
-| `CivicVoice_Feature_Goal_Matrix.md` | Feature → Goal mapping |
+| `GoVoicing_Technical_Blueprint_Cloudflare.md` | Architecture — Cloudflare Pages, Workers, D1, R2 |
+| `GoVoicing_Security_EdgeCase_Protocol.md` | Amnesia Protocol, anti-spoofing, cost defense |
+| `GoVoicing_UIUX_Strategy.md` | Editorial Brutalism design language |
+| `GoVoicing_Component_Spec.md` | CSS variables, component specs |
+| `GoVoicing_Feature_Goal_Matrix.md` | Feature → Goal mapping |
 
 ### 3. Previous Module Code
 After Module 0 is built, also read the `src/` directory to understand existing code.
@@ -41,7 +41,7 @@ After Module 0 is built, also read the `src/` directory to understand existing c
 | Backend | Cloudflare Workers |
 | Database | Cloudflare D1 (SQLite at edge) |
 | Storage | Cloudflare R2 (deferred — needs credit card) |
-| Testing Domain | `civicvoice.pages.dev` |
+| Testing Domain | `govoicing.com` |
 
 ## Cloudflare Account
 

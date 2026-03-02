@@ -477,7 +477,7 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                             transition: 'all 0.2s ease',
                         }}
                     >
-                        {turnstileToken ? 'Submit to CivicVoice' : 'Complete Verification First'}
+                        {turnstileToken ? 'Submit to GoVoicing' : 'Complete Verification First'}
                     </button>
                 </div>
             )}

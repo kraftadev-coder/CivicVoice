@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
             <div className="container">
                 <h2 className="cv-footer__title">Stay Connected</h2>
                 <p className="cv-footer__subtitle">
-                    CivicVoice — Infrastructure for Truth. Empowering citizens to document and verify civic evidence.
+                    GoVoicing — Infrastructure for Truth. Empowering citizens to document and verify civic evidence.
                 </p>
 
                 <div className="cv-footer__links">
@@ -88,7 +88,7 @@ export const Footer: React.FC = () => {
                 </div>
 
                 <div className="cv-footer__bottom">
-                    <span>© {new Date().getFullYear()} CivicVoice. All rights reserved.</span>
+                    <span>© {new Date().getFullYear()} GoVoicing. All rights reserved.</span>
                     <div className="cv-footer__social">
                         <a href="#" className="cv-footer__social-icon" aria-label="Twitter">𝕏</a>
                         <a href="#" className="cv-footer__social-icon" aria-label="GitHub">⌂</a>

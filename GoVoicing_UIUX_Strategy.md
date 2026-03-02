@@ -1,4 +1,4 @@
-CivicVoice: UI/UX Aesthetic Strategy (Editorial Brutalism)
+GoVoicing: UI/UX Aesthetic Strategy (Editorial Brutalism)
 
 Concept: "The Digital Witness Ledger"
 
@@ -66,7 +66,7 @@ Result: Even a blurry photo looks like an "official piece of evidence."
 
 X/Twitter: Chaotic, rounded, "engagement" focused.
 
-CivicVoice: Structured, sharp-edged, "integrity" focused.
+GoVoicing: Structured, sharp-edged, "integrity" focused.
 
 Investors' Buy-in: Investors will see a product that doesn't look like a "social media clone." It looks like an Infrastructure for Truth.
 

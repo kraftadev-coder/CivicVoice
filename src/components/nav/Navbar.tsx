@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
             {/* Logo */}
             <Link to="/" className="cv-nav__logo">
                 <span className="cv-nav__logo-mark">◈</span>
-                <span className="cv-nav__logo-text">CivicVoice</span>
+                <span className="cv-nav__logo-text">GoVoicing</span>
             </Link>
 
             {/* Navigation Links */}

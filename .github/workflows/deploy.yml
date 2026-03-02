@@ -1,4 +1,4 @@
-# CivicVoice — CI/CD Pipeline
+# GoVoicing — CI/CD Pipeline
 # Module 8: Production Deployment
 #
 # Triggers:
@@ -91,7 +91,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist/ --project-name=civicvoice --branch=${{ github.head_ref || github.ref_name }}
+          command: pages deploy dist/ --project-name=govoicing --branch=${{ github.head_ref || github.ref_name }}
 
       - name: Deploy Workers API
         if: github.ref == 'refs/heads/main'

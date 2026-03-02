@@ -290,8 +290,8 @@ await test('Performance — Vite config optimized, PWA manifest, Service Worker'
     assert(fileExists('public/manifest.json'), 'Missing manifest.json');
     const manifest = readFile('public/manifest.json');
     assert(
-        manifest.includes('"standalone"') && manifest.includes('"CivicVoice"'),
-        'Manifest must set display:standalone and name:CivicVoice'
+        manifest.includes('"standalone"') && manifest.includes('"GoVoicing"'),
+        'Manifest must set display:standalone and name:GoVoicing'
     );
     assert(
         manifest.includes('icon-192') && manifest.includes('icon-512'),

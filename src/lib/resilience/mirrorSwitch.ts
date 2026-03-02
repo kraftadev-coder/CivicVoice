@@ -15,9 +15,9 @@
 export type EndpointHealth = 'healthy' | 'degraded' | 'down';
 
 export interface MirrorConfig {
-    /** Primary API endpoint (e.g., civicvoice.ng/api) */
+    /** Primary API endpoint (e.g., govoicing.com/api) */
     primary: string;
-    /** Mirror endpoint (e.g., civicvoice-api.workers.dev) */
+    /** Mirror endpoint (e.g., govoicing-api.workers.dev) */
     mirrors: string[];
     /** Request timeout in milliseconds */
     timeoutMs: number;

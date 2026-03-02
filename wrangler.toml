@@ -1,7 +1,7 @@
-# CivicVoice — Cloudflare Workers Configuration
+# GoVoicing — Cloudflare Workers Configuration
 # Source: Implementation Plan Module 5
 
-name = "civicvoice-api"
+name = "govoicing-api"
 main = "workers/index.ts"
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
@@ -9,14 +9,14 @@ compatibility_flags = ["nodejs_compat"]
 # ─── D1 Database Binding ───
 [[d1_databases]]
 binding = "DB"
-database_name = "civicvoice-db"
+database_name = "govoicing-db"
 database_id = "5124c643-8361-4350-a68f-e7a932a235f0"
 
 # ─── R2 Bucket Binding (enable after adding credit card) ───
 # Uncomment when R2 is enabled in Cloudflare Dashboard:
 # [[r2_buckets]]
 # binding = "MEDIA_BUCKET"
-# bucket_name = "civicvoice-media"
+# bucket_name = "govoicing-media"
 
 # ─── Observability — Disabled for Amnesia Protocol §1.1 ───
 [observability]
@@ -25,8 +25,8 @@ enabled = false
 # ─── Worker Routes ───
 # When deploying to custom domain, add:
 # [[routes]]
-# pattern = "civicvoice.ng/api/*"
-# zone_name = "civicvoice.ng"
+# pattern = "govoicing.com/api/*"
+# zone_name = "govoicing.com"
 
 # ─── Worker Secrets (Module 7 + Module 8) ───
 # Set via: wrangler secret put <SECRET_NAME>
@@ -47,17 +47,17 @@ TURNSTILE_SITE_KEY = "0x4AAAAAAA_placeholder_replace_in_dashboard"
 
 # ─── Environment: Production ───
 [env.production]
-name = "civicvoice-api"
+name = "govoicing-api"
 
 [[env.production.d1_databases]]
 binding = "DB"
-database_name = "civicvoice-db"
+database_name = "govoicing-db"
 database_id = "5124c643-8361-4350-a68f-e7a932a235f0"
 
 # Uncomment when R2 is enabled:
 # [[env.production.r2_buckets]]
 # binding = "MEDIA_BUCKET"
-# bucket_name = "civicvoice-media"
+# bucket_name = "govoicing-media"
 
 [env.production.vars]
 TURNSTILE_SITE_KEY = "0x4AAAAAAA_replace_with_production_site_key"

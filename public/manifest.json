@@ -1,6 +1,6 @@
 {
-  "name": "CivicVoice",
-  "short_name": "CivicVoice",
+  "name": "GoVoicing",
+  "short_name": "GoVoicing",
   "description": "Infrastructure for Truth — Anonymous civic reporting with verified evidence",
   "start_url": "/",
   "display": "standalone",

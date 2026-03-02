@@ -6,7 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="CivicVoice — Infrastructure for Truth. A civic whistleblowing platform with verified evidence and zero-knowledge anonymity." />
+    content="GoVoicing — Infrastructure for Truth. A civic whistleblowing platform with verified evidence and zero-knowledge anonymity." />
   <meta name="theme-color" content="#F3F1EB" />
 
   <!-- Google Fonts: Doczai Design System — Inter -->
@@ -18,7 +18,7 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/icons/icon-192.png" />
 
-  <title>CivicVoice — Infrastructure for Truth</title>
+  <title>GoVoicing — Infrastructure for Truth</title>
 </head>
 
 <body>
@@ -30,10 +30,10 @@
       window.addEventListener('load', function () {
         navigator.serviceWorker.register('/sw.js')
           .then(function (reg) {
-            console.log('[CivicVoice] SW registered:', reg.scope);
+            console.log('[GoVoicing] SW registered:', reg.scope);
           })
           .catch(function (err) {
-            console.log('[CivicVoice] SW registration failed:', err);
+            console.log('[GoVoicing] SW registration failed:', err);
           });
       });
     }

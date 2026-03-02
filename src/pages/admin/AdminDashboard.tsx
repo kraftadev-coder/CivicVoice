@@ -183,7 +183,7 @@ export function AdminDashboard() {
         <div className="admin-dashboard" data-theme="security" id="admin-dashboard">
             <header className="admin-header">
                 <div>
-                    <h1>CivicVoice Admin</h1>
+                    <h1>GoVoicing Admin</h1>
                     <div className="admin-timestamp">
                         Last updated: {new Date().toLocaleString()}
                         {' • '}Auto-refresh: {REFRESH_INTERVAL_MS / 1000}s

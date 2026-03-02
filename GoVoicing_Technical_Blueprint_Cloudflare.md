@@ -1,4 +1,4 @@
-CivicVoice Technical Blueprint: Cloudflare + GitHub Edition v1.1
+GoVoicing Technical Blueprint: Cloudflare + GitHub Edition v1.1
 
 Architect: Senior Software Engineer / Fractional CTO
 

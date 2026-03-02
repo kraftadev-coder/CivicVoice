@@ -453,7 +453,7 @@ async function runAll() {
         const wranglerPath = path.resolve(__dirname, '../wrangler.toml');
         assert(fs.existsSync(wranglerPath), 'wrangler.toml must exist');
         const wrangler = fs.readFileSync(wranglerPath, 'utf-8');
-        assert(wrangler.includes('civicvoice-db'), 'wrangler.toml must reference civicvoice-db');
+        assert(wrangler.includes('govoicing-db'), 'wrangler.toml must reference govoicing-db');
         assert(wrangler.includes('5124c643'), 'wrangler.toml must include D1 database ID');
         assert(wrangler.includes('binding = "DB"'), 'wrangler.toml must bind DB');
         assert(wrangler.includes('MEDIA_BUCKET'), 'wrangler.toml must reference MEDIA_BUCKET (commented)');

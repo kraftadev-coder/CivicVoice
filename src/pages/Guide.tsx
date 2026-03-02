@@ -10,7 +10,7 @@ const features = [
         title: 'Dual-Lane Feed',
         tagline: 'Truth & Opinion, separated.',
         description:
-            'CivicVoice separates verified witness reports from personal opinions. Toggle between the "Witness" lane (facts, evidence, geo-stamped reports) and the "Social" lane (community discussion, reactions, commentary).',
+            'GoVoicing separates verified witness reports from personal opinions. Toggle between the "Witness" lane (facts, evidence, geo-stamped reports) and the "Social" lane (community discussion, reactions, commentary).',
         steps: [
             'Open the home Feed page',
             'Use the toggle at the top to switch between Witness and Social lanes',
@@ -26,7 +26,7 @@ const features = [
         title: 'Witness Cam & Report',
         tagline: 'Capture. Scrub. Submit.',
         description:
-            'Use your device camera to capture photo or video evidence. CivicVoice automatically strips all metadata (EXIF, GPS, device info) to protect your identity before submission.',
+            'Use your device camera to capture photo or video evidence. GoVoicing automatically strips all metadata (EXIF, GPS, device info) to protect your identity before submission.',
         steps: [
             'Tap "Report" in the navigation bar',
             'Grant camera permission and capture evidence',
@@ -77,7 +77,7 @@ const features = [
         title: 'Dual-Key Geo-Verification',
         tagline: 'Were you really there?',
         description:
-            'CivicVoice cross-references your network geo (from Cloudflare edge) with your device GPS. If both agree, your report earns the verified "Emerald Badge" — giving it maximum credibility in the feed.',
+            'GoVoicing cross-references your network geo (from Cloudflare edge) with your device GPS. If both agree, your report earns the verified "Emerald Badge" — giving it maximum credibility in the feed.',
         steps: [
             'Your device GPS captures your location (district-level only)',
             'Cloudflare edge detects your network country',
@@ -154,7 +154,7 @@ const Guide: React.FC = () => {
                     <span className="guide__hero-accent">Powered by Citizens.</span>
                 </h1>
                 <p className="guide__hero-subtitle">
-                    CivicVoice is a privacy-first civic reporting platform. Submit anonymous, geo-verified
+                    GoVoicing is a privacy-first civic reporting platform. Submit anonymous, geo-verified
                     evidence of governance failures — no email, no phone number, no tracking.
                     Your identity is protected by the <strong>Amnesia Protocol</strong>.
                 </p>
@@ -272,7 +272,7 @@ const Guide: React.FC = () => {
             <section className="guide__usecases-section">
                 <h2 className="guide__section-title">What Can You Report?</h2>
                 <p className="guide__section-subtitle">
-                    CivicVoice is built for documenting governance failures across every sector.
+                    GoVoicing is built for documenting governance failures across every sector.
                 </p>
                 <div className="guide__usecases-grid">
                     {useCases.map((uc, i) => (

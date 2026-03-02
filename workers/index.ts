@@ -1,5 +1,5 @@
 /**
- * CivicVoice Workers — Main Router
+ * GoVoicing Workers — Main Router
  *
  * Routes incoming requests to the appropriate API handler.
  * Applies Amnesia Protocol middleware to ALL API endpoints at the router level.
@@ -103,7 +103,7 @@ export default {
             } else if (pathname === '/api/health') {
                 response = new Response(JSON.stringify({
                     status: 'ok',
-                    service: 'civicvoice-api',
+                    service: 'govoicing-api',
                     version: '1.0.0',
                     timestamp: new Date().toISOString(),
                     d1: !!env.DB,

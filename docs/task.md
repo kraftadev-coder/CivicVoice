@@ -1,4 +1,4 @@
-# CivicVoice — Task Tracker
+# GoVoicing — Task Tracker
 
 ## Infrastructure Setup
 - [x] Create Cloudflare account
@@ -32,7 +32,7 @@
 - [x] Home page with Bento Ledger grid — aria-live feed panel, tabpanel role
 - [x] Mock data forward-compatible (createdAt, upvotes, verificationStatus fields)
 - [x] Production optimizations (vite.config.ts: chunk splitting, ES2020 target)
-- [x] Package identity updated (temp-init → civicvoice)
+- [x] Package identity updated (temp-init → govoicing)
 - [x] Run Verification Gate 1 (6 tests) — Code verified, manual visual tests below
 
 ### Verification Gate 1 — Results
@@ -107,7 +107,7 @@
 | 4.5 | No PII in Worker logic | ✅ PASS | Zero IP storage patterns; /api/report log suppression confirmed |
 
 ## Module 5: Workers Backend (D1, R2) ✅
-- [x] Create D1 database via MCP (`civicvoice-db`, UUID: `5124c643-8361-4350-a68f-e7a932a235f0`)
+- [x] Create D1 database via MCP (`govoicing-db`, UUID: `5124c643-8361-4350-a68f-e7a932a235f0`)
 - [x] D1 schema (witness_reports, anon_reputation + 5 indexes) — executed live on D1
 - [x] /api/report Worker (Amnesia Endpoint: validate, rate-limit, Dual-Key verify, R2 upload, D1 insert)
 - [x] /api/feed Worker (lane filtering, cursor pagination, D1 queries)

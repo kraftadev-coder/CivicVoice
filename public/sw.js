@@ -1,5 +1,5 @@
 /**
- * CivicVoice — Service Worker
+ * GoVoicing — Service Worker
  * Module 8: Production Deployment
  *
  * PWA offline support with Cache-First strategy for static assets
@@ -13,9 +13,9 @@
  * Source: Implementation Plan Module 8, Feature Goal Matrix §"Network Reality"
  */
 
-const CACHE_NAME = 'civicvoice-v1';
-const STATIC_CACHE = 'civicvoice-static-v1';
-const FONT_CACHE = 'civicvoice-fonts-v1';
+const CACHE_NAME = 'govoicing-v1';
+const STATIC_CACHE = 'govoicing-static-v1';
+const FONT_CACHE = 'govoicing-fonts-v1';
 
 // Static assets to precache on install
 const PRECACHE_URLS = [
@@ -146,7 +146,7 @@ async function navigationHandler(request) {
         // Fall back to cached index page (SPA shell)
         const cached = await caches.match('/');
         if (cached) return cached;
-        return new Response('CivicVoice is offline. Please check your connection.', {
+        return new Response('GoVoicing is offline. Please check your connection.', {
             status: 503,
             headers: { 'Content-Type': 'text/html' },
         });

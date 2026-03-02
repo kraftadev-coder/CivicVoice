@@ -1,4 +1,4 @@
-CivicVoice: Security Hardening & Edge Case Protocol v1.0
+GoVoicing: Security Hardening & Edge Case Protocol v1.0
 
 Architect: Senior Software Engineer (Security & Infrastructure Focus)
 
@@ -78,7 +78,7 @@ Scenario: The platform is targeted for a DNS block in Nigeria.
 
 Implementation: 1.  Worker Mirrors: Deploy the same Worker code to multiple "worker.dev" subdomains.
 
-2.  Client-Side Switch: If civicvoice.ng returns a 502 or timeout, the PWA automatically tries a secondary "Mirror" API endpoint.
+2.  Client-Side Switch: If govoicing.com returns a 502 or timeout, the PWA automatically tries a secondary "Mirror" API endpoint.
 
 4.3 "The Reputation Sybil Attack"
 

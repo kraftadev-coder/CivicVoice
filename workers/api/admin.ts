@@ -1,5 +1,5 @@
 /**
- * CivicVoice — Admin API Worker
+ * GoVoicing — Admin API Worker
  * Module 7: Admin Dashboard & Observability
  *
  * Protected endpoints for platform monitoring and content moderation.

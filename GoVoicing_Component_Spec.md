@@ -1,4 +1,4 @@
-CivicVoice: Implementation Spec (Antigravity/CSS)
+GoVoicing: Implementation Spec (Antigravity/CSS)
 
 Global CSS Variables
 

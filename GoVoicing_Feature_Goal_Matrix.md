@@ -1,4 +1,4 @@
-CivicVoice: Product Feature Matrix (Antigravity Source)
+GoVoicing: Product Feature Matrix (Antigravity Source)
 
 Core Goal: A forum for interaction and opinions on social/political matters, whistleblowing with verified proof (photo/file/video), with options for total anonymity or persistent accounts.
 
