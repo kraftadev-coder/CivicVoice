@@ -1,644 +1,340 @@
 /*
- * CivicVoice — Admin Dashboard Styles
- * Module 7: Admin Dashboard & Observability
- *
- * Security Mode (dark) theme for admin panel.
- * Uses the same design tokens from globals.css.
+ * admin.css — Admin Dashboard
+ * Preserves dark theme but aligns typography & spacing with Doczai
  */
 
-/* ─── Admin Layout ─── */
-
+/* ============================================
+   1. ADMIN LAYOUT — Dark theme preserved
+   ============================================ */
 .admin-dashboard {
     min-height: 100vh;
-    background-color: var(--bg-obsidian);
+    background: var(--bg-obsidian);
     color: var(--text-inverse);
-    padding: var(--space-lg);
+    font-family: var(--font-primary);
 }
 
 .admin-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: var(--space-xl);
-    padding-bottom: var(--space-md);
-    border-bottom: var(--border-weight) solid #30363D;
+    padding: var(--space-4) var(--space-7);
+    background: var(--bg-obsidian-surface);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 50;
 }
 
-.admin-header h1 {
-    font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
+.admin-header__title {
+    font-size: 1.25rem;
+    font-weight: 700;
     color: var(--text-inverse);
     letter-spacing: -0.02em;
 }
 
-.admin-header .admin-badge {
-    font-family: var(--font-data);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: var(--space-xs) var(--space-sm);
-    border: var(--border-weight) solid var(--truth-emerald);
-    color: var(--truth-emerald);
-    border-radius: var(--radius-sm);
+.admin-header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
 }
 
-.admin-timestamp {
-    font-family: var(--font-data);
-    font-size: 0.75rem;
-    color: #8B949E;
-    margin-top: var(--space-xs);
+.admin-header__link {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    padding: var(--space-2) 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
 }
 
-/* ─── Bento Grid ─── */
+.admin-header__link:hover {
+    color: var(--accent-primary);
+}
 
-.admin-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
-    max-width: 1400px;
+.admin-header__link--active {
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.admin-header__back {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.admin-header__back:hover {
+    color: var(--accent-primary-hover);
+}
+
+
+/* ============================================
+   2. ADMIN CONTENT AREA
+   ============================================ */
+.admin-content {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: var(--space-7);
 }
 
-.admin-grid .panel--wide {
-    grid-column: span 2;
-}
-
-/* ─── Panel Base ─── */
-
-.admin-panel {
-    background-color: #161B22;
-    border: var(--border-weight) solid #30363D;
-    border-radius: var(--radius-sm);
-    padding: var(--space-lg);
-    transition: border-color var(--duration-fast) var(--ease-snappy);
-}
-
-.admin-panel:hover {
-    border-color: #484F58;
-}
-
-.admin-panel h2 {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
+.admin-content__title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
     font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--text-inverse);
-    margin-bottom: var(--space-md);
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
+    margin-bottom: var(--space-5);
 }
 
-.admin-panel h2 .panel-icon {
-    font-size: 1.25rem;
-}
 
-.admin-panel h3 {
-    font-family: var(--font-data);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #8B949E;
-    margin-bottom: var(--space-sm);
-    margin-top: var(--space-md);
-}
-
-/* ─── Stat Cards ─── */
-
-.stat-grid {
+/* ============================================
+   3. STAT CARDS
+   ============================================ */
+.admin-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-5);
+    margin-bottom: var(--space-7);
 }
 
-.stat-card {
-    background-color: #0D1117;
-    border: 1px solid #21262D;
-    border-radius: var(--radius-sm);
-    padding: var(--space-md);
-    text-align: center;
+.admin-stat {
+    background: var(--bg-obsidian-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    transition: border-color 0.2s ease;
 }
 
-.stat-card .stat-value {
-    font-family: var(--font-data);
-    font-size: 1.5rem;
+.admin-stat:hover {
+    border-color: rgba(168, 165, 230, 0.3);
+}
+
+.admin-stat__label {
+    font-family: var(--font-primary);
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: var(--space-2);
+}
+
+.admin-stat__value {
+    font-size: 2rem;
     font-weight: 700;
     color: var(--text-inverse);
-    line-height: 1;
-    margin-bottom: var(--space-xs);
+    letter-spacing: -0.02em;
 }
 
-.stat-card .stat-value.emerald {
+.admin-stat__change {
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: var(--space-1);
+}
+
+.admin-stat__change--up {
     color: var(--truth-emerald);
 }
 
-.stat-card .stat-value.amber {
-    color: var(--caution-amber);
-}
-
-.stat-card .stat-value.red {
+.admin-stat__change--down {
     color: var(--danger-red);
 }
 
-.stat-card .stat-label {
-    font-family: var(--font-data);
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #8B949E;
-}
 
-/* ─── Progress / Meter Bars ─── */
-
-.meter-bar {
-    width: 100%;
-    height: 6px;
-    background-color: #21262D;
-    border-radius: 3px;
-    margin-top: var(--space-sm);
+/* ============================================
+   4. MODERATION QUEUE / PANELS
+   ============================================ */
+.admin-panel {
+    background: var(--bg-obsidian-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
     overflow: hidden;
+    margin-bottom: var(--space-6);
 }
 
-.meter-bar .meter-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width var(--duration-normal) var(--ease-snappy);
-}
-
-.meter-fill.emerald {
-    background-color: var(--truth-emerald);
-}
-
-.meter-fill.amber {
-    background-color: var(--caution-amber);
-}
-
-.meter-fill.red {
-    background-color: var(--danger-red);
-}
-
-.meter-label {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-data);
-    font-size: 0.625rem;
-    color: #8B949E;
-    margin-top: var(--space-xs);
-}
-
-/* ─── Moderation Queue ─── */
-
-.moderation-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.moderation-item {
+.admin-panel__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-md);
-    border: 1px solid #21262D;
-    border-radius: var(--radius-sm);
-    margin-bottom: var(--space-sm);
-    background-color: #0D1117;
-    transition: border-color var(--duration-fast) var(--ease-snappy);
+    padding: var(--space-5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.moderation-item:hover {
-    border-color: var(--caution-amber);
-}
-
-.moderation-item .report-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.moderation-item .report-id {
-    font-family: var(--font-data);
-    font-size: 0.75rem;
+.admin-panel__title {
+    font-size: 1.125rem;
+    font-weight: 600;
     color: var(--text-inverse);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.moderation-item .report-meta {
-    font-family: var(--font-data);
-    font-size: 0.625rem;
-    color: #8B949E;
-    margin-top: 2px;
+.admin-panel__count {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
 }
 
-.moderation-item .report-meta .flagged-badge {
-    color: var(--caution-amber);
-    font-weight: 700;
-    margin-right: var(--space-sm);
-}
-
-.moderation-actions {
-    display: flex;
-    gap: var(--space-sm);
-    flex-shrink: 0;
-}
-
-.mod-btn {
-    font-family: var(--font-data);
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: var(--space-xs) var(--space-sm);
-    border: 1px solid;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all var(--duration-fast) var(--ease-snappy);
-    background: transparent;
-}
-
-.mod-btn.approve {
-    color: var(--truth-emerald);
-    border-color: var(--truth-emerald);
-}
-
-.mod-btn.approve:hover {
-    background-color: var(--truth-emerald);
-    color: var(--bg-obsidian);
-}
-
-.mod-btn.reject {
-    color: var(--danger-red);
-    border-color: var(--danger-red);
-}
-
-.mod-btn.reject:hover {
-    background-color: var(--danger-red);
-    color: var(--bg-obsidian);
-}
-
-.mod-btn.escalate {
-    color: var(--caution-amber);
-    border-color: var(--caution-amber);
-}
-
-.mod-btn.escalate:hover {
-    background-color: var(--caution-amber);
-    color: var(--bg-obsidian);
-}
-
-.mod-btn:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-.mod-btn:focus-visible {
-    outline: 2px solid var(--truth-emerald);
-    outline-offset: 2px;
-}
-
-/* ─── Activity Log ─── */
-
-.activity-feed {
-    list-style: none;
+.admin-panel__body {
     padding: 0;
-    margin: 0;
-    max-height: 400px;
-    overflow-y: auto;
 }
 
-.activity-item {
+/* Table-like rows */
+.admin-row {
     display: flex;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid #21262D;
-    font-size: 0.8125rem;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.15s ease;
 }
 
-.activity-item:last-child {
+.admin-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-row:last-child {
     border-bottom: none;
 }
 
-.activity-timestamp {
-    font-family: var(--font-data);
-    font-size: 0.6875rem;
-    color: #8B949E;
-    white-space: nowrap;
-    flex-shrink: 0;
-    min-width: 140px;
+.admin-row__id {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    min-width: 80px;
 }
 
-.activity-type {
-    font-family: var(--font-data);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 1px var(--space-xs);
-    border-radius: 2px;
-    flex-shrink: 0;
-}
-
-.activity-type.report {
-    color: var(--truth-emerald);
-    background-color: rgba(5, 150, 105, 0.15);
-}
-
-.activity-type.moderation {
-    color: var(--caution-amber);
-    background-color: rgba(217, 119, 6, 0.15);
-}
-
-.activity-type.user {
-    color: #58A6FF;
-    background-color: rgba(88, 166, 255, 0.15);
-}
-
-.activity-type.system {
-    color: #8B949E;
-    background-color: rgba(139, 148, 158, 0.15);
-}
-
-.activity-detail {
-    font-family: var(--font-body);
-    color: #C9D1D9;
+.admin-row__text {
     flex: 1;
-    min-width: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
 }
 
-.activity-geo {
-    font-family: var(--font-data);
-    font-size: 0.625rem;
-    color: #484F58;
-    margin-left: var(--space-xs);
-}
-
-/* ─── Budget Alert Badges ─── */
-
-.budget-alert {
+.admin-row__status {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
-    font-family: var(--font-data);
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 2px var(--space-sm);
-    border-radius: var(--radius-sm);
-    font-weight: 700;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: var(--radius-full);
 }
 
-.budget-alert.safe {
-    color: var(--truth-emerald);
-    background-color: rgba(5, 150, 105, 0.15);
-}
-
-.budget-alert.warning {
+.admin-row__status--pending {
+    background: rgba(217, 119, 6, 0.15);
     color: var(--caution-amber);
-    background-color: rgba(217, 119, 6, 0.15);
 }
 
-.budget-alert.critical {
+.admin-row__status--approved {
+    background: rgba(5, 150, 105, 0.15);
+    color: var(--truth-emerald);
+}
+
+.admin-row__status--rejected {
+    background: rgba(220, 38, 38, 0.15);
     color: var(--danger-red);
-    background-color: rgba(220, 38, 38, 0.15);
 }
 
-/* ─── Access Denied Screen ─── */
+.admin-row__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
 
-.admin-access-denied {
+/* Admin buttons */
+.admin-btn {
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.admin-btn--approve {
+    border-color: rgba(5, 150, 105, 0.3);
+    color: var(--truth-emerald);
+}
+
+.admin-btn--approve:hover {
+    background: rgba(5, 150, 105, 0.1);
+}
+
+.admin-btn--reject {
+    border-color: rgba(220, 38, 38, 0.3);
+    color: var(--danger-red);
+}
+
+.admin-btn--reject:hover {
+    background: rgba(220, 38, 38, 0.1);
+}
+
+
+/* ============================================
+   5. ACCESS DENIED SCREEN
+   ============================================ */
+.admin-denied {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: var(--bg-obsidian);
-    color: var(--text-inverse);
+    background: var(--bg-obsidian);
     text-align: center;
-    padding: var(--space-xl);
+    padding: var(--space-7);
 }
 
-.admin-access-denied .lock-icon {
-    font-size: 4rem;
-    margin-bottom: var(--space-lg);
-    opacity: 0.4;
-}
-
-.admin-access-denied h1 {
-    font-family: var(--font-data);
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+.admin-denied__icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-5);
     color: var(--danger-red);
-    margin-bottom: var(--space-md);
 }
 
-.admin-access-denied p {
-    font-family: var(--font-data);
-    font-size: 0.75rem;
-    color: #8B949E;
+.admin-denied__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-inverse);
+    margin-bottom: var(--space-3);
+}
+
+.admin-denied__text {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
     max-width: 400px;
 }
 
-.admin-token-input {
-    margin-top: var(--space-lg);
-    display: flex;
-    gap: var(--space-sm);
-}
 
-.admin-token-input input {
-    font-family: var(--font-data);
-    font-size: 0.75rem;
-    padding: var(--space-sm) var(--space-md);
-    background-color: #161B22;
-    border: var(--border-weight) solid #30363D;
-    border-radius: var(--radius-sm);
-    color: var(--text-inverse);
-    min-width: 280px;
-}
-
-.admin-token-input input:focus {
-    outline: none;
-    border-color: var(--truth-emerald);
-}
-
-.admin-token-input button {
-    font-family: var(--font-data);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: var(--space-sm) var(--space-md);
-    background-color: var(--truth-emerald);
-    color: var(--bg-obsidian);
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: opacity var(--duration-fast) var(--ease-snappy);
-}
-
-.admin-token-input button:hover {
-    opacity: 0.85;
-}
-
-/* ─── Loading ─── */
-
-.admin-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-xl);
-    color: #8B949E;
-    font-family: var(--font-data);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
-
-@keyframes adminPulse {
-
-    0%,
-    100% {
-        opacity: 0.4;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-.admin-loading::after {
-    content: '...';
-    animation: adminPulse 1.5s ease-in-out infinite;
-}
-
-/* ─── Empty States ─── */
-
-.empty-state {
-    text-align: center;
-    padding: var(--space-xl);
-    color: #484F58;
-    font-family: var(--font-data);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
-
-.empty-state .empty-icon {
-    font-size: 2rem;
-    margin-bottom: var(--space-sm);
-    opacity: 0.3;
-}
-
-/* ─── Sparkline ─── */
-
-.sparkline-container {
-    display: flex;
-    align-items: flex-end;
-    gap: 2px;
-    height: 32px;
-    margin-top: var(--space-sm);
-}
-
-.sparkline-bar {
-    flex: 1;
-    background-color: var(--truth-emerald);
-    border-radius: 1px 1px 0 0;
-    min-height: 2px;
-    opacity: 0.7;
-    transition: opacity var(--duration-fast) var(--ease-snappy);
-}
-
-.sparkline-bar:hover {
-    opacity: 1;
-}
-
-/* ─── Distribution Chart ─── */
-
-.distribution-chart {
-    display: flex;
-    gap: var(--space-md);
-    align-items: flex-end;
-    margin-top: var(--space-sm);
-}
-
-.dist-bar-group {
-    flex: 1;
-    text-align: center;
-}
-
-.dist-bar {
-    width: 100%;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    min-height: 4px;
-    margin-bottom: var(--space-xs);
-    transition: height var(--duration-normal) var(--ease-snappy);
-}
-
-.dist-bar.emerald {
-    background-color: var(--truth-emerald);
-}
-
-.dist-bar.amber {
-    background-color: var(--caution-amber);
-}
-
-.dist-label {
-    font-family: var(--font-data);
-    font-size: 0.5625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #8B949E;
-}
-
-/* ─── Responsive ─── */
-
+/* ============================================
+   6. RESPONSIVE
+   ============================================ */
 @media (max-width: 768px) {
-    .admin-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .admin-grid .panel--wide {
-        grid-column: span 1;
-    }
-
     .admin-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-sm);
+        padding: var(--space-3) var(--space-4);
     }
 
-    .moderation-item {
-        flex-direction: column;
-        gap: var(--space-sm);
+    .admin-content {
+        padding: var(--space-5) var(--space-4);
     }
 
-    .moderation-actions {
-        width: 100%;
-        justify-content: flex-end;
-    }
-
-    .stat-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .admin-token-input {
-        flex-direction: column;
-    }
-
-    .admin-token-input input {
-        min-width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .admin-dashboard {
-        padding: var(--space-md);
-    }
-
-    .stat-grid {
+    .admin-stats {
         grid-template-columns: 1fr;
     }
 
-    .activity-timestamp {
-        min-width: 80px;
-        font-size: 0.5625rem;
+    .admin-row {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .admin-row__id {
+        min-width: auto;
     }
 }

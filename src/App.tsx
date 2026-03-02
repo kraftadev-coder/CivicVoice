@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppShell, Header } from './components/ui';
+import { AppShell, Header, Footer } from './components/ui';
 import { Navbar } from './components/nav/Navbar';
 import { AuthProvider } from './contexts/AuthContext';
 import Home from './pages/Home';
@@ -39,6 +39,7 @@ const App: React.FC = () => {
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/guide" element={<Guide />} />
                 </Routes>
+                <Footer />
               </AppShell>
             }
           />

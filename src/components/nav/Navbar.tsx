@@ -4,8 +4,7 @@ import './Navbar.css';
 
 const navLinks = [
     { path: '/', label: 'Feed' },
-    { path: '/report', label: 'Report' },
-    { path: '/guide', label: 'Guide' },
+    { path: '/guide', label: 'How It Works' },
     { path: '/profile', label: 'Profile' },
 ];
 
@@ -31,6 +30,9 @@ export const Navbar: React.FC = () => {
                         {link.label}
                     </Link>
                 ))}
+                <Link to="/report" className="cv-nav__cta">
+                    File a Report
+                </Link>
             </nav>
         </>
     );

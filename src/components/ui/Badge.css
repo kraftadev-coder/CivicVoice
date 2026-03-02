@@ -1,15 +1,14 @@
-/* Badge — Emerald and Amber status badges */
+/* Badge — Doczai style: softer colors, pill shapes */
 .cv-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 10px;
-    font-family: var(--font-data);
-    font-size: 0.6875rem;
+    padding: 4px 12px;
+    font-family: var(--font-primary);
+    font-size: 12px;
     font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-radius: 2px;
+    letter-spacing: 0.02em;
+    border-radius: var(--radius-full);
     border: 1px solid transparent;
     line-height: 1.5;
 }
@@ -28,9 +27,9 @@
 }
 
 .cv-badge--neutral {
-    background: #F3F4F6;
-    color: var(--text-secondary);
-    border-color: var(--border-light);
+    background: var(--bg-surface-muted);
+    color: var(--text-body);
+    border-color: var(--border-default);
 }
 
 .cv-badge--danger {
@@ -39,7 +38,13 @@
     border-color: var(--danger-red);
 }
 
+.cv-badge--lavender {
+    background: rgba(168, 165, 230, 0.1);
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
 /* Pulse animation for verified stamps */
 .cv-badge--pulse {
-    animation: emeraldPulse 0.6s var(--ease-snappy);
+    animation: emeraldPulse 0.6s ease;
 }

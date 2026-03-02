@@ -1,15 +1,14 @@
-/* StaggeredFeed — Slide-up entrance with staggered delay */
+/* StaggeredFeed — Smooth decelerate entrance */
 
 /* Hidden state — before animation triggers */
 .stagger-hidden {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
 }
 
 /* Animate state — slide up with stagger */
 .stagger-animate {
-    animation: slideUp var(--duration-normal) var(--ease-snappy) forwards;
+    animation: slideUp 400ms var(--ease-decelerate) forwards;
     animation-delay: calc(var(--stagger-index, 0) * var(--stagger-delay));
     opacity: 0;
-    /* Start invisible, animation fills to opacity: 1 */
 }

@@ -1,34 +1,34 @@
-/* Card — 2px solid borders, 4px radius, hover expansion to 4px */
+/* Card — Doczai style: 1px borders, 12px radius, hover lift */
 .cv-card {
-    background: var(--bg-elevated);
-    border: var(--border-weight) solid var(--border-color);
-    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: border-width var(--duration-fast) var(--ease-snappy),
-        box-shadow var(--duration-fast) var(--ease-snappy);
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .cv-card:hover {
-    border-width: 4px;
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
 }
 
-/* Witness card — emerald accent */
+/* Witness card — lavender accent */
 .cv-card--witness {
-    border-left: 4px solid var(--truth-emerald);
+    border-left: 3px solid var(--accent-primary);
 }
 
 .cv-card--witness:hover {
-    border-color: var(--truth-emerald);
-    border-width: 4px;
+    border-color: var(--border-hover);
+    border-left-color: var(--accent-primary);
 }
 
-/* Opinion card — lighter, standard */
+/* Opinion card — standard */
 .cv-card--opinion {
-    border-color: var(--border-light);
+    border-color: var(--border-default);
 }
 
 .cv-card--opinion:hover {
-    border-color: var(--border-color);
+    border-color: var(--border-hover);
 }
 
 /* Interactive card */
@@ -42,18 +42,18 @@
 
 /* Sub-components */
 .cv-card__header {
-    padding: var(--space-md) var(--space-lg);
-    border-bottom: 1px solid var(--border-light);
+    padding: var(--space-5);
+    border-bottom: 1px solid var(--border-default);
 }
 
 .cv-card__body {
-    padding: var(--space-lg);
+    padding: var(--space-5);
 }
 
 .cv-card__footer {
-    padding: var(--space-md) var(--space-lg);
-    border-top: 1px solid var(--border-light);
+    padding: var(--space-4) var(--space-5);
+    border-top: 1px solid var(--border-default);
     display: flex;
     align-items: center;
-    gap: var(--space-md);
+    gap: var(--space-4);
 }

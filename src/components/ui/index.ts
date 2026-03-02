@@ -7,4 +7,4 @@ export type { CardVariant } from './Card';
 export { Badge } from './Badge';
 export type { BadgeVariant } from './Badge';
 
-export { AppShell, Header, Main, BentoGrid, BentoItem } from './Layout';
+export { AppShell, Header, Main, BentoGrid, BentoItem, Footer } from './Layout';

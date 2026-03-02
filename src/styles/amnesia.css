@@ -1,10 +1,6 @@
 /*
  * amnesia.css — Amnesia Audit Terminal UI
- *
- * "Digital Terminal" aesthetic for the Amnesia Protocol audit display.
- * Component Spec: "Make the user feel like they are inside a high-security vault."
- *
- * Uses scanning animations that sequentially "tick off" security checks.
+ * Preserves dark terminal aesthetic but aligns with Doczai tokens
  */
 
 /* ============================================
@@ -12,17 +8,17 @@
    ============================================ */
 .amnesia-audit {
     background: var(--bg-obsidian);
-    border: var(--border-weight) solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: var(--space-lg);
-    font-family: var(--font-data);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    font-family: var(--font-primary);
     font-size: 0.8125rem;
     line-height: 1;
     position: relative;
     overflow: hidden;
 }
 
-/* Terminal scanline overlay for atmosphere */
+/* Terminal scanline overlay */
 .amnesia-audit::before {
     content: '';
     position: absolute;
@@ -30,20 +26,20 @@
     background: repeating-linear-gradient(0deg,
             transparent,
             transparent 2px,
-            rgba(5, 150, 105, 0.03) 2px,
-            rgba(5, 150, 105, 0.03) 4px);
+            rgba(168, 165, 230, 0.02) 2px,
+            rgba(168, 165, 230, 0.02) 4px);
     pointer-events: none;
     z-index: 1;
 }
 
-/* Terminal header bar */
+/* Terminal header */
 .amnesia-audit__header {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-lg);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid rgba(5, 150, 105, 0.2);
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid rgba(168, 165, 230, 0.15);
     position: relative;
     z-index: 2;
 }
@@ -52,15 +48,16 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--truth-emerald);
+    background: var(--accent-primary);
     animation: terminalPulse 2s ease-in-out infinite;
 }
 
 .amnesia-audit__header-text {
-    color: var(--truth-emerald);
+    color: var(--accent-primary);
     font-size: 0.6875rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 
@@ -70,7 +67,7 @@
 .amnesia-audit__lines {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-4);
     position: relative;
     z-index: 2;
 }
@@ -78,21 +75,19 @@
 .amnesia-audit__line {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
-    color: var(--text-muted);
+    gap: var(--space-2);
+    color: var(--text-secondary);
     opacity: 0;
     transform: translateX(-8px);
     transition: none;
 }
 
-/* Sequentially revealed lines */
 .amnesia-audit__line--revealed {
     opacity: 1;
     transform: translateX(0);
-    animation: auditLineReveal 0.4s var(--ease-snappy) forwards;
+    animation: auditLineReveal 0.4s var(--ease-default) forwards;
 }
 
-/* Status indicator: [  ] pending / [OK] passed */
 .amnesia-audit__status {
     min-width: 32px;
     text-align: center;
@@ -100,21 +95,20 @@
 }
 
 .amnesia-audit__status--pending {
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .amnesia-audit__status--ok {
     color: var(--truth-emerald);
 }
 
-/* Label text (e.g., "IP LOG PURGED") */
 .amnesia-audit__label {
     color: var(--text-inverse);
     letter-spacing: 0.05em;
     flex: 1;
+    font-weight: 400;
 }
 
-/* Dots separator */
 .amnesia-audit__dots {
     flex: 1;
     text-align: right;
@@ -123,12 +117,11 @@
     white-space: nowrap;
 }
 
-/* Result text */
 .amnesia-audit__result {
     min-width: 60px;
     text-align: right;
     font-weight: 600;
-    transition: color 0.3s var(--ease-snappy);
+    transition: color 0.3s ease;
 }
 
 .amnesia-audit__result--pending {
@@ -143,8 +136,6 @@
 /* ============================================
    3. SCANNING ANIMATION
    ============================================ */
-
-/* Active scanning bar that sweeps across the line */
 .amnesia-audit__scanner {
     position: absolute;
     left: 0;
@@ -153,15 +144,15 @@
     width: 0;
     background: linear-gradient(90deg,
             transparent,
-            rgba(5, 150, 105, 0.1),
-            rgba(5, 150, 105, 0.2),
-            rgba(5, 150, 105, 0.1),
+            rgba(168, 165, 230, 0.08),
+            rgba(168, 165, 230, 0.15),
+            rgba(168, 165, 230, 0.08),
             transparent);
     pointer-events: none;
 }
 
 .amnesia-audit__scanner--active {
-    animation: scanSweep 0.8s var(--ease-snappy) forwards;
+    animation: scanSweep 0.8s var(--ease-default) forwards;
 }
 
 
@@ -169,9 +160,9 @@
    4. SUMMARY BAR
    ============================================ */
 .amnesia-audit__summary {
-    margin-top: var(--space-lg);
-    padding-top: var(--space-sm);
-    border-top: 1px solid rgba(5, 150, 105, 0.2);
+    margin-top: var(--space-5);
+    padding-top: var(--space-2);
+    border-top: 1px solid rgba(168, 165, 230, 0.15);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -183,6 +174,7 @@
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 .amnesia-audit__summary-text--pending {
@@ -195,15 +187,13 @@
 
 .amnesia-audit__timestamp {
     font-size: 0.625rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 
 /* ============================================
    5. KEYFRAME ANIMATIONS
    ============================================ */
-
-/* Individual line reveal */
 @keyframes auditLineReveal {
     from {
         opacity: 0;
@@ -216,7 +206,6 @@
     }
 }
 
-/* Scanner sweep across line */
 @keyframes scanSweep {
     0% {
         width: 0;
@@ -233,71 +222,59 @@
     }
 }
 
-/* Terminal header pulse */
 @keyframes terminalPulse {
 
     0%,
     100% {
         opacity: 1;
-        box-shadow: 0 0 4px var(--truth-emerald);
+        box-shadow: 0 0 4px var(--accent-primary);
     }
 
     50% {
         opacity: 0.5;
-        box-shadow: 0 0 8px var(--truth-emerald);
+        box-shadow: 0 0 8px var(--accent-primary);
     }
 }
 
-/* Rescan button hover glow */
-@keyframes rescanGlow {
 
-    0%,
-    100% {
-        box-shadow: 0 0 0 rgba(5, 150, 105, 0);
-    }
-
-    50% {
-        box-shadow: 0 0 12px rgba(5, 150, 105, 0.3);
-    }
-}
-
-/* Rescan button */
+/* ============================================
+   6. RESCAN BUTTON
+   ============================================ */
 .amnesia-audit__rescan {
     background: transparent;
-    border: 1px solid var(--truth-emerald);
-    color: var(--truth-emerald);
-    padding: var(--space-xs) var(--space-md);
-    font-family: var(--font-data);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    padding: var(--space-1) var(--space-4);
+    font-family: var(--font-primary);
     font-size: 0.625rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    font-weight: 500;
     cursor: pointer;
-    border-radius: var(--radius-sm);
-    transition: all var(--duration-fast) var(--ease-snappy);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
     position: relative;
     z-index: 2;
-    margin-top: var(--space-md);
+    margin-top: var(--space-4);
 }
 
 .amnesia-audit__rescan:hover {
-    background: rgba(5, 150, 105, 0.1);
-    animation: rescanGlow 1s ease-in-out infinite;
+    background: rgba(168, 165, 230, 0.1);
 }
 
 .amnesia-audit__rescan:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-    animation: none;
 }
 
 .amnesia-audit__rescan:focus-visible {
-    outline: 2px solid var(--truth-emerald);
+    outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
 }
 
 
 /* ============================================
-   6. GPU COMPOSITING HINTS
+   7. GPU & ACCESSIBILITY
    ============================================ */
 .amnesia-audit__line {
     will-change: opacity, transform;
@@ -307,10 +284,6 @@
     will-change: width, left;
 }
 
-
-/* ============================================
-   7. REDUCED MOTION — Accessibility
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
     .amnesia-audit::before {
         display: none;
