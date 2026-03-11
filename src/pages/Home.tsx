@@ -46,12 +46,12 @@ type TabLane = 'all' | 'witness' | 'social';
 /* ─── Sub-Components ─── */
 
 const FeedTabs: React.FC<{ active: TabLane; onChange: (t: TabLane) => void }> = ({ active, onChange }) => (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 flex-wrap">
         {(['all', 'witness', 'opinion'] as const).map((tab) => (
             <button
                 key={tab}
                 onClick={() => onChange(tab === 'opinion' ? 'social' : tab as TabLane)}
-                className={`rounded-full px-5 py-2 text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 ${
+                className={`rounded-full px-4 py-2 text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 whitespace-nowrap ${
                     (tab === 'opinion' ? 'social' : tab) === active
                         ? 'bg-cta text-white shadow-lg shadow-cta/10'
                         : 'bg-white text-text-secondary hover:bg-surface-muted hover:text-text-primary border border-border'
@@ -121,12 +121,12 @@ const WitnessCardNew: React.FC<{ post: WitnessPost; onDelete?: (id: string) => v
             </div>
 
             {/* Description */}
-            <p className="mt-3 pl-[60px] text-[14px] leading-relaxed text-text-body">
+            <p className="mt-3 pl-[48px] sm:pl-[60px] text-[14px] leading-relaxed text-text-body">
                 {post.excerpt}
             </p>
 
             {/* Footer */}
-            <div className="mt-5 flex items-center gap-3 pl-[60px]">
+            <div className="mt-5 flex items-center gap-2 sm:gap-3 pl-[48px] sm:pl-[60px] flex-wrap">
                 <span className="flex items-center gap-1.5 text-[11px] font-semibold text-text-secondary">
                     <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
                     {location}
@@ -185,8 +185,8 @@ const OpinionCardNew: React.FC<{ post: OpinionPost; onDelete?: (id: string) => v
                 </div>
             </div>
         </div>
-        <p className="mt-3 pl-[60px] text-[14px] leading-relaxed text-text-body">{post.text}</p>
-        <div className="mt-5 flex items-center gap-3 pl-[60px]">
+        <p className="mt-3 pl-[48px] sm:pl-[60px] text-[14px] leading-relaxed text-text-body">{post.text}</p>
+        <div className="mt-5 flex items-center gap-2 sm:gap-3 pl-[48px] sm:pl-[60px] flex-wrap">
             <span className="flex items-center gap-1.5 text-[11px] font-semibold text-text-secondary">
                 <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
                 {post.handle.replace('@', '').toUpperCase().substring(0, 5)}
@@ -289,8 +289,8 @@ const SecureReporter: React.FC<{ onPostSuccess?: () => void }> = ({ onPostSucces
                 className="mb-4 w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-[13px] leading-relaxed text-white/80 placeholder-white/30 outline-none transition-all focus:border-brand/40 focus:ring-1 focus:ring-brand/20 resize-none"
                 rows={3}
             />
-            <div className="flex items-center gap-3">
-                <button className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-[11px] font-black uppercase tracking-[0.15em] text-white/60 transition-all hover:border-white/20 hover:bg-white/10">
+            <div className="flex items-center gap-2 sm:gap-3">
+                <button className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 sm:px-4 py-3 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.15em] text-white/60 transition-all hover:border-white/20 hover:bg-white/10">
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
                     Media
                 </button>
@@ -419,20 +419,20 @@ const Home: React.FC = () => {
     ].sort((a, b) => b._sort - a._sort);
 
     return (
-        <div className="mx-auto max-w-6xl px-6 py-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-6 sm:py-8 overflow-x-hidden">
             {/* Header / Title */}
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                    <h1 className="text-4xl font-black italic tracking-tighter text-text-primary">Community Feed</h1>
+            <div className="mb-6 sm:mb-8 flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="min-w-0">
+                    <h1 className="text-2xl sm:text-4xl font-black italic tracking-tighter text-text-primary">Community Feed</h1>
                     <p className="meta-label mt-1 text-text-secondary">Real-Time Witness Ledger</p>
                 </div>
                 <FeedTabs active={tabLane} onChange={setTabLane} />
             </div>
 
             {/* Two-Column Layout */}
-            <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
+            <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1fr_340px]">
                 {/* LEFT — Feed */}
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-4 sm:gap-5 min-w-0">
                     {feedState === 'loading' && (
                         <div className="flex items-center justify-center py-20">
                             <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-brand/20 border-t-brand" />
