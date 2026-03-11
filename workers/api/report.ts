@@ -426,6 +426,64 @@ export async function handleReportSubmission(
     }
 }
 
+/* ─── Delete Report Handler ─── */
+
+/**
+ * Handle DELETE /api/report
+ *
+ * Allows a user to delete their own report.
+ * Requires: reportId + anonToken in JSON body.
+ * Only the original author (matching anon_token) can delete.
+ * Performs a soft delete (sets status = 'deleted').
+ */
+export async function handleDeleteReport(
+    request: Request,
+    env: Env
+): Promise<Response> {
+    if (request.method !== 'DELETE') {
+        return jsonResponse({ error: 'Method not allowed' }, 405);
+    }
+
+    try {
+        const body = await request.json() as { reportId?: string; anonToken?: string };
+        const { reportId, anonToken } = body;
+
+        if (!reportId || typeof reportId !== 'string') {
+            return jsonResponse({ error: 'Missing or invalid reportId' }, 400);
+        }
+        if (!anonToken || typeof anonToken !== 'string') {
+            return jsonResponse({ error: 'Missing or invalid anonToken' }, 400);
+        }
+
+        // Verify the report exists and belongs to this user
+        const report = await env.DB.prepare(
+            `SELECT report_id, anon_token, status FROM witness_reports WHERE report_id = ?`
+        ).bind(reportId).first<{ report_id: string; anon_token: string; status: string }>();
+
+        if (!report) {
+            return jsonResponse({ error: 'Report not found' }, 404);
+        }
+
+        if (report.anon_token !== anonToken) {
+            return jsonResponse({ error: 'Unauthorized: you can only delete your own reports' }, 403);
+        }
+
+        if (report.status === 'deleted') {
+            return jsonResponse({ error: 'Report already deleted' }, 410);
+        }
+
+        // Soft delete — set status to 'deleted'
+        await env.DB.prepare(
+            `UPDATE witness_reports SET status = 'deleted' WHERE report_id = ?`
+        ).bind(reportId).run();
+
+        return jsonResponse({ success: true, reportId, message: 'Report deleted' });
+    } catch (err) {
+        const message = err instanceof Error ? err.message : 'Internal server error';
+        return jsonResponse({ error: message }, 500);
+    }
+}
+
 /* ─── Response Helpers ─── */
 
 function jsonResponse(data: unknown, status: number = 200): Response {

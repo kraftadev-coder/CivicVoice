@@ -63,11 +63,23 @@ const FeedTabs: React.FC<{ active: TabLane; onChange: (t: TabLane) => void }> = 
     </div>
 );
 
-const WitnessCardNew: React.FC<{ post: WitnessPost }> = ({ post }) => {
+const WitnessCardNew: React.FC<{ post: WitnessPost; onDelete?: (id: string) => void }> = ({ post, onDelete }) => {
     const location = post.geoLabel.split('•')[0]?.split(',')[0]?.trim() || 'Unknown';
     const title = post.excerpt.length > 60 ? post.excerpt.substring(0, 60).split(' ').slice(0, -1).join(' ') : post.excerpt;
     return (
-        <article className="modern-card group cursor-pointer p-6">
+        <article className="modern-card group cursor-pointer p-6 relative">
+            {/* Delete button */}
+            {onDelete && (
+                <button
+                    onClick={(e) => { e.stopPropagation(); onDelete(post.id); }}
+                    className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center h-8 w-8 rounded-xl bg-danger/5 text-danger/40 hover:bg-danger/10 hover:text-danger"
+                    title="Delete post"
+                    type="button"
+                >
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                </button>
+            )}
+
             <div className="flex items-start gap-4">
                 {/* Icon */}
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-surface-muted text-text-secondary">
@@ -137,8 +149,20 @@ const WitnessCardNew: React.FC<{ post: WitnessPost }> = ({ post }) => {
     );
 };
 
-const OpinionCardNew: React.FC<{ post: OpinionPost }> = ({ post }) => (
-    <article className="modern-card group cursor-pointer p-6">
+const OpinionCardNew: React.FC<{ post: OpinionPost; onDelete?: (id: string) => void }> = ({ post, onDelete }) => (
+    <article className="modern-card group cursor-pointer p-6 relative">
+        {/* Delete button */}
+        {onDelete && (
+            <button
+                onClick={(e) => { e.stopPropagation(); onDelete(post.id); }}
+                className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center h-8 w-8 rounded-xl bg-danger/5 text-danger/40 hover:bg-danger/10 hover:text-danger"
+                title="Delete post"
+                type="button"
+            >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+            </button>
+        )}
+
         <div className="flex items-start gap-4">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-warning-light text-warning">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -327,6 +351,7 @@ const StatsCards: React.FC = () => (
 
 /* ─── Main Component ─── */
 const Home: React.FC = () => {
+    const { session } = useAuth();
     const [tabLane, setTabLane] = useState<TabLane>('all');
     const [witnessPosts, setWitnessPosts] = useState<WitnessPost[]>([]);
     const [opinionPosts, setOpinionPosts] = useState<OpinionPost[]>([]);
@@ -357,6 +382,30 @@ const Home: React.FC = () => {
     }, []);
 
     useEffect(() => { fetchFeed(tabLane); return () => abortRef.current?.abort(); }, [fetchFeed, tabLane]);
+
+    /* ─── Delete Handler ─── */
+    const handleDelete = useCallback(async (reportId: string) => {
+        if (!session?.anonToken) return;
+        const confirmed = window.confirm('Are you sure you want to delete this post? This action cannot be undone.');
+        if (!confirmed) return;
+        try {
+            const res = await fetch(`${API_BASE}/api/report`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reportId, anonToken: session.anonToken }),
+            });
+            if (res.ok) {
+                // Optimistically remove from UI
+                setWitnessPosts(prev => prev.filter(p => p.id !== reportId));
+                setOpinionPosts(prev => prev.filter(p => p.id !== reportId));
+            } else {
+                const err = await res.json().catch(() => ({}));
+                alert((err as { error?: string }).error || 'Failed to delete post');
+            }
+        } catch {
+            alert('Network error — could not delete post');
+        }
+    }, [session]);
 
     const filteredPosts = (() => {
         if (tabLane === 'witness') return { witness: witnessPosts, opinion: [] as OpinionPost[] };
@@ -398,8 +447,8 @@ const Home: React.FC = () => {
                     )}
                     {feedState !== 'loading' && allPosts.map((post) =>
                         post.type === 'witness'
-                            ? <WitnessCardNew key={post.id} post={post as WitnessPost} />
-                            : <OpinionCardNew key={post.id} post={post as OpinionPost} />
+                            ? <WitnessCardNew key={post.id} post={post as WitnessPost} onDelete={handleDelete} />
+                            : <OpinionCardNew key={post.id} post={post as OpinionPost} onDelete={handleDelete} />
                     )}
                 </div>
 

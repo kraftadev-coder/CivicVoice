@@ -15,7 +15,7 @@
  */
 
 import { amnesiaHeaderPurge } from './amnesia/headerPurge';
-import { handleReportSubmission } from './api/report';
+import { handleReportSubmission, handleDeleteReport } from './api/report';
 import { handleFeed } from './api/feed';
 import { handleReputation } from './api/reputation';
 import { handleAudioGate } from './api/audioGate';
@@ -41,7 +41,7 @@ const SECURITY_HEADERS: Record<string, string> = {
 
 const CORS_HEADERS: Record<string, string> = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Request-Timestamp, Authorization',
     'Access-Control-Max-Age': '86400',
 };
@@ -89,9 +89,13 @@ export default {
             let response: Response;
 
             if (pathname === '/api/report' || pathname === '/api/report/') {
-                // report.ts applies its OWN amnesia purge for countryCode extraction,
-                // so pass the ORIGINAL request to preserve cf-ipcountry before purge
-                response = await handleReportSubmission(request, env);
+                if (request.method === 'DELETE') {
+                    response = await handleDeleteReport(processedRequest, env);
+                } else {
+                    // report.ts applies its OWN amnesia purge for countryCode extraction,
+                    // so pass the ORIGINAL request to preserve cf-ipcountry before purge
+                    response = await handleReportSubmission(request, env);
+                }
             } else if (pathname === '/api/feed' || pathname === '/api/feed/') {
                 response = await handleFeed(processedRequest, env);
             } else if (pathname === '/api/reputation' || pathname === '/api/reputation/') {
