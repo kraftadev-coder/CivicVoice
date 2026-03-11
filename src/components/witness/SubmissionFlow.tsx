@@ -272,16 +272,19 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
     }
 
     return (
-        <div className="submission-flow" id="submission-flow">
+        <div className="p-6 sm:p-8" id="submission-flow">
             {/* Step Indicator */}
             {step !== 'idle' && step !== 'done' && (
-                <div className="submission-flow__steps" aria-label="Submission progress">
+                <div className="mb-6 flex items-center justify-center gap-2">
                     {[1, 2, 3, 4].map((num, i) => (
                         <React.Fragment key={num}>
                             {i > 0 && (
-                                <div className={`submission-flow__connector ${stepNumber > num - 1 ? 'submission-flow__connector--completed' : ''}`} />
+                                <div className={`h-0.5 w-8 rounded-full transition-colors ${stepNumber > num - 1 ? 'bg-success' : 'bg-border'}`} />
                             )}
-                            <div className={`submission-flow__step ${stepNumber === num ? 'submission-flow__step--active' : ''} ${stepNumber > num ? 'submission-flow__step--completed' : ''}`}>
+                            <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all ${
+                                stepNumber === num ? 'bg-cta text-white shadow-lg shadow-cta/20' :
+                                stepNumber > num ? 'bg-success text-white' : 'border border-border bg-white text-text-secondary'
+                            }`}>
                                 {stepNumber > num ? '✓' : num}
                             </div>
                         </React.Fragment>
@@ -289,77 +292,89 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                 </div>
             )}
 
-            {/* Idle State — Open Camera Button */}
+            {/* Idle State — Camera Prompt */}
             {step === 'idle' && (
-                <div className="camera-prompt">
-                    <div className="camera-prompt__icon">📸</div>
-                    <h3 className="camera-prompt__title">Witness Cam</h3>
-                    <p className="camera-prompt__description">
+                <div className="flex flex-col items-center py-8 text-center">
+                    {/* Camera Icon */}
+                    <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-surface-muted">
+                        <svg className="h-8 w-8 text-brand" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                            <path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                            <path d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+                        </svg>
+                    </div>
+
+                    <h3 className="mb-2 text-xl font-black tracking-tight text-text-primary">Witness Cam</h3>
+                    <p className="mb-6 max-w-sm text-[13px] leading-relaxed text-text-body">
                         Capture evidence with automatic metadata scrubbing and geo-stamping. Your identity is protected.
                     </p>
+
+                    {/* Open Camera Button */}
                     <button
-                        className="witness-cam__capture-btn"
                         onClick={() => setStep('capture')}
-                        aria-label="Open Witness Cam"
                         type="button"
                         id="open-witness-cam"
-                        style={{
-                            border: '4px solid var(--truth-emerald)',
-                            width: '72px',
-                            height: '72px',
-                            borderRadius: '50%',
-                            background: 'transparent',
-                            cursor: 'pointer',
-                            marginTop: 'var(--space-md)',
-                        }}
-                    />
+                        aria-label="Open Witness Cam"
+                        className="btn-primary group mb-4 text-[14px]"
+                    >
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                            <path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                            <path d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+                        </svg>
+                        Open Camera
+                        <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                    </button>
+
+                    {/* Video Gate Badge */}
                     {!reputation?.canUploadVideo && (
-                        <div className="video-gate-badge video-gate-badge--locked" id="video-gate-badge">
-                            🔒 Video requires Advanced (1000+ pts)
+                        <div className="badge-pending mt-2 text-[10px]" id="video-gate-badge">
+                            <svg className="mr-1 h-3 w-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 00-6 0V9h6z" clipRule="evenodd" /></svg>
+                            Video requires Advanced (1000+ pts)
                         </div>
                     )}
                     {reputation?.canUploadVideo && (
-                        <div className="video-gate-badge video-gate-badge--unlocked">
+                        <div className="badge-verified mt-2 text-[10px]">
                             ✓ Video unlocked
                         </div>
                     )}
+
+                    {/* Privacy Note */}
+                    <div className="mt-6 flex items-center gap-2 rounded-xl bg-surface-muted px-4 py-2.5">
+                        <svg className="h-3.5 w-3.5 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-[11px] font-medium text-text-secondary">Amnesia Protocol protects your identity</span>
+                    </div>
                 </div>
             )}
 
             {/* Preview Step */}
             {step === 'preview' && capturedMedia && (
                 <div>
-                    <h3 style={{ marginBottom: 'var(--space-md)' }}>Preview Evidence</h3>
+                    <h3 className="mb-4 text-lg font-black tracking-tight text-text-primary">Preview Evidence</h3>
 
                     {/* Evidence Frame */}
-                    <div className="submission-flow__preview">
-                        {/* Top bar: geo region */}
+                    <div className="overflow-hidden rounded-2xl border border-border bg-white">
                         {geoStamp && (
-                            <div className="submission-flow__geo-label" id="geo-label">
-                                📍 {geoStamp.geoLabel} • {new Date(geoStamp.timestamp).toLocaleTimeString()}
+                            <div className="flex items-center gap-2 border-b border-border px-4 py-2 text-[12px] text-text-secondary" id="geo-label">
+                                <svg className="h-3.5 w-3.5 text-success" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+                                {geoStamp.geoLabel} • {new Date(geoStamp.timestamp).toLocaleTimeString()}
                             </div>
                         )}
-
-                        {/* Media preview */}
                         {capturedMedia.type === 'photo' && previewUrl && (
-                            <img src={previewUrl} alt="Captured evidence" style={{ width: '100%' }} />
+                            <img src={previewUrl} alt="Captured evidence" className="w-full" />
                         )}
                         {capturedMedia.type === 'video' && previewUrl && (
-                            <video src={previewUrl} controls style={{ width: '100%' }} />
+                            <video src={previewUrl} controls className="w-full" />
                         )}
                         {capturedMedia.type === 'audio' && previewUrl && (
-                            <div style={{ padding: 'var(--space-lg)' }}>
-                                <audio src={previewUrl} controls style={{ width: '100%' }} />
-                            </div>
+                            <div className="p-6"><audio src={previewUrl} controls className="w-full" /></div>
                         )}
                     </div>
 
-                    {/* Report Details: Title, Description, Lane */}
-                    <div style={{ marginTop: 'var(--space-lg)', display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+                    {/* Report Details */}
+                    <div className="mt-6 space-y-4">
                         <div>
-                            <label htmlFor="report-title" style={{ display: 'block', marginBottom: 'var(--space-xs)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
-                                Report Title
-                            </label>
+                            <label htmlFor="report-title" className="meta-label mb-1.5 block text-text-secondary">Report Title</label>
                             <input
                                 id="report-title"
                                 type="text"
@@ -367,22 +382,11 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Brief title for your report..."
                                 maxLength={120}
-                                style={{
-                                    width: '100%',
-                                    padding: 'var(--space-sm) var(--space-md)',
-                                    background: 'var(--surface-card)',
-                                    border: 'var(--border-weight) solid var(--border-color)',
-                                    borderRadius: 'var(--radius-sm)',
-                                    color: 'var(--text-main)',
-                                    fontSize: '0.875rem',
-                                    boxSizing: 'border-box',
-                                }}
+                                className="w-full rounded-xl border border-border bg-white px-4 py-3 text-[14px] text-text-primary outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/10"
                             />
                         </div>
                         <div>
-                            <label htmlFor="report-description" style={{ display: 'block', marginBottom: 'var(--space-xs)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
-                                Description
-                            </label>
+                            <label htmlFor="report-description" className="meta-label mb-1.5 block text-text-secondary">Description</label>
                             <textarea
                                 id="report-description"
                                 value={description}
@@ -390,41 +394,21 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                                 placeholder="Describe what you witnessed..."
                                 rows={3}
                                 maxLength={2000}
-                                style={{
-                                    width: '100%',
-                                    padding: 'var(--space-sm) var(--space-md)',
-                                    background: 'var(--surface-card)',
-                                    border: 'var(--border-weight) solid var(--border-color)',
-                                    borderRadius: 'var(--radius-sm)',
-                                    color: 'var(--text-main)',
-                                    fontSize: '0.875rem',
-                                    resize: 'vertical',
-                                    fontFamily: 'inherit',
-                                    boxSizing: 'border-box',
-                                }}
+                                className="w-full resize-y rounded-xl border border-border bg-white px-4 py-3 font-[inherit] text-[14px] text-text-primary outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/10"
                             />
                         </div>
                         <div>
-                            <label style={{ display: 'block', marginBottom: 'var(--space-xs)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
-                                Feed Lane
-                            </label>
-                            <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
+                            <label className="meta-label mb-1.5 block text-text-secondary">Feed Lane</label>
+                            <div className="flex gap-3">
                                 <button
                                     type="button"
                                     id="lane-witness"
                                     onClick={() => setLane('witness')}
-                                    style={{
-                                        flex: 1,
-                                        padding: 'var(--space-sm) var(--space-md)',
-                                        background: lane === 'witness' ? 'var(--truth-emerald)' : 'transparent',
-                                        border: `var(--border-weight) solid ${lane === 'witness' ? 'var(--truth-emerald)' : 'var(--border-color)'}`,
-                                        borderRadius: 'var(--radius-sm)',
-                                        color: lane === 'witness' ? 'white' : 'var(--text-main)',
-                                        cursor: 'pointer',
-                                        fontWeight: 600,
-                                        fontSize: '0.8125rem',
-                                        transition: 'all 0.2s ease',
-                                    }}
+                                    className={`flex-1 rounded-xl border px-4 py-3 text-[13px] font-semibold transition-all ${
+                                        lane === 'witness'
+                                            ? 'border-success bg-success text-white shadow-md shadow-success/10'
+                                            : 'border-border bg-white text-text-primary hover:border-success/30'
+                                    }`}
                                 >
                                     ◈ Witness Report
                                 </button>
@@ -432,18 +416,11 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                                     type="button"
                                     id="lane-social"
                                     onClick={() => setLane('social')}
-                                    style={{
-                                        flex: 1,
-                                        padding: 'var(--space-sm) var(--space-md)',
-                                        background: lane === 'social' ? 'var(--text-main)' : 'transparent',
-                                        border: `var(--border-weight) solid ${lane === 'social' ? 'var(--text-main)' : 'var(--border-color)'}`,
-                                        borderRadius: 'var(--radius-sm)',
-                                        color: lane === 'social' ? 'var(--surface-card)' : 'var(--text-main)',
-                                        cursor: 'pointer',
-                                        fontWeight: 600,
-                                        fontSize: '0.8125rem',
-                                        transition: 'all 0.2s ease',
-                                    }}
+                                    className={`flex-1 rounded-xl border px-4 py-3 text-[13px] font-semibold transition-all ${
+                                        lane === 'social'
+                                            ? 'border-cta bg-cta text-white shadow-md shadow-cta/10'
+                                            : 'border-border bg-white text-text-primary hover:border-cta/30'
+                                    }`}
                                 >
                                     💬 Social Opinion
                                 </button>
@@ -454,30 +431,25 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                     {/* Sor Soke toggle (audio only) */}
                     {capturedMedia.type === 'audio' && (
                         <button
-                            className={`sor-soke-toggle ${sorSokeEnabled ? 'sor-soke-toggle--active' : ''}`}
                             onClick={() => setSorSokeEnabled(!sorSokeEnabled)}
                             type="button"
                             id="sor-soke-preview-toggle"
-                            style={{ marginBottom: 'var(--space-md)', marginTop: 'var(--space-md)', width: '100%', justifyContent: 'center' }}
+                            className={`mt-4 w-full rounded-xl border px-4 py-3 text-center text-[13px] font-semibold transition-all ${
+                                sorSokeEnabled
+                                    ? 'border-brand bg-brand/10 text-brand'
+                                    : 'border-border bg-white text-text-secondary hover:border-brand/30'
+                            }`}
                         >
                             🔊 Sor Soke Voice Disguise {sorSokeEnabled ? 'ON' : 'OFF'}
                         </button>
                     )}
 
                     {/* Actions */}
-                    <div className="flex gap-md" style={{ marginTop: 'var(--space-lg)' }}>
+                    <div className="mt-6 flex gap-3">
                         <button
                             onClick={() => { resetFlow(); setStep('capture'); }}
                             type="button"
-                            style={{
-                                flex: 1,
-                                padding: 'var(--space-sm) var(--space-md)',
-                                background: 'none',
-                                border: 'var(--border-weight) solid var(--border-color)',
-                                borderRadius: 'var(--radius-sm)',
-                                color: 'var(--text-main)',
-                                cursor: 'pointer',
-                            }}
+                            className="btn-secondary flex-1 text-[13px]"
                         >
                             Retake
                         </button>
@@ -485,18 +457,9 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                             onClick={handleStartScrub}
                             type="button"
                             id="process-evidence"
-                            style={{
-                                flex: 2,
-                                padding: 'var(--space-sm) var(--space-md)',
-                                background: 'var(--truth-emerald)',
-                                border: 'var(--border-weight) solid var(--truth-emerald)',
-                                borderRadius: 'var(--radius-sm)',
-                                color: 'white',
-                                cursor: 'pointer',
-                                fontWeight: 700,
-                            }}
+                            className="btn-primary flex-[2] text-[13px]"
                         >
-                            Process & Scrub
+                            Process & Scrub →
                         </button>
                     </div>
                 </div>
@@ -505,14 +468,19 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
             {/* Scrub Step */}
             {step === 'scrub' && (
                 <div>
-                    <h3 style={{ marginBottom: 'var(--space-md)' }}>Scrubbing Evidence</h3>
-                    <div className="submission-flow__scrub-progress" id="scrub-progress">
+                    <h3 className="mb-4 text-lg font-black tracking-tight text-text-primary">Scrubbing Evidence</h3>
+                    <div className="space-y-2" id="scrub-progress">
                         {scrubSteps.map((s, i) => (
                             <div
                                 key={i}
-                                className={`submission-flow__scrub-item ${s.status === 'done' ? 'submission-flow__scrub-item--done' : ''} ${s.status === 'active' ? 'submission-flow__scrub-item--active' : ''}`}
+                                className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] transition-all ${
+                                    s.status === 'done' ? 'border-success/20 bg-success-light text-success' :
+                                    s.status === 'active' ? 'border-brand/20 bg-brand/5 text-brand' :
+                                    s.status === 'error' ? 'border-danger/20 bg-danger/5 text-danger' :
+                                    'border-border bg-white text-text-secondary'
+                                }`}
                             >
-                                <span className="submission-flow__scrub-icon">
+                                <span className="text-[14px]">
                                     {s.status === 'done' ? '✓' : s.status === 'active' ? '⏳' : s.status === 'error' ? '✕' : '○'}
                                 </span>
                                 {s.label}
@@ -521,22 +489,13 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                     </div>
 
                     {error && (
-                        <div style={{
-                            padding: 'var(--space-md)',
-                            background: 'rgba(220, 38, 38, 0.08)',
-                            border: '1px solid var(--danger-red)',
-                            borderRadius: 'var(--radius-sm)',
-                            fontFamily: 'var(--font-data)',
-                            fontSize: '0.75rem',
-                            color: 'var(--danger-red)',
-                            marginTop: 'var(--space-md)',
-                        }}>
+                        <div className="mt-4 rounded-xl border border-danger/20 bg-danger/5 p-4 text-[12px] font-medium text-danger">
                             ⚠ {error}
                         </div>
                     )}
 
                     {scrubResult && (
-                        <div className="mono" style={{ marginTop: 'var(--space-md)', fontSize: '0.6875rem' }}>
+                        <div className="mt-3 text-center font-mono text-[11px] text-text-secondary">
                             Original: {formatBytes(scrubResult.originalSize)} → Scrubbed: {formatBytes(scrubResult.scrubbedSize)}
                         </div>
                     )}
@@ -545,20 +504,26 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
 
             {/* Submit Confirmation Step */}
             {step === 'submit' && (
-                <div style={{ textAlign: 'center' }}>
-                    <h3 style={{ marginBottom: 'var(--space-md)' }}>Evidence Processed</h3>
-                    <p style={{ marginBottom: 'var(--space-lg)', margin: '0 auto var(--space-lg)' }}>
+                <div className="py-4 text-center">
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-success-light">
+                        <svg className="h-7 w-7 text-success" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                            <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                        </svg>
+                    </div>
+                    <h3 className="mb-2 text-lg font-black tracking-tight text-text-primary">Evidence Processed</h3>
+                    <p className="mx-auto mb-6 max-w-sm text-[13px] text-text-body">
                         All metadata has been stripped. Your identity is protected by the Amnesia Protocol.
                     </p>
 
                     {geoStamp && (
-                        <div className="submission-flow__geo-label" style={{ justifyContent: 'center', marginBottom: 'var(--space-lg)' }}>
-                            📍 {geoStamp.geoLabel}
+                        <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full bg-surface-muted px-4 py-2 text-[12px] text-text-secondary">
+                            <svg className="h-3.5 w-3.5 text-success" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+                            {geoStamp.geoLabel}
                         </div>
                     )}
 
-                    {/* Turnstile CAPTCHA — Privacy-first human verification (Module 8) */}
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-lg)' }}>
+                    {/* Turnstile CAPTCHA */}
+                    <div className="mb-6 flex justify-center">
                         <Turnstile
                             siteKey={TURNSTILE_SITE_KEY}
                             onVerify={(token) => setTurnstileToken(token)}
@@ -573,18 +538,11 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
                         type="button"
                         id="submit-evidence"
                         disabled={!turnstileToken}
-                        style={{
-                            padding: 'var(--space-md) var(--space-xl)',
-                            background: turnstileToken ? 'var(--truth-emerald)' : 'var(--text-muted)',
-                            border: 'var(--border-weight) solid ' + (turnstileToken ? 'var(--truth-emerald)' : 'var(--text-muted)'),
-                            borderRadius: 'var(--radius-sm)',
-                            color: 'white',
-                            cursor: turnstileToken ? 'pointer' : 'not-allowed',
-                            fontWeight: 700,
-                            fontSize: '0.875rem',
-                            opacity: turnstileToken ? 1 : 0.6,
-                            transition: 'all 0.2s ease',
-                        }}
+                        className={`rounded-full px-8 py-3 text-[14px] font-bold text-white transition-all ${
+                            turnstileToken
+                                ? 'bg-success shadow-lg shadow-success/20 hover:shadow-xl hover:shadow-success/30 cursor-pointer'
+                                : 'bg-text-secondary/40 cursor-not-allowed opacity-60'
+                        }`}
                     >
                         {turnstileToken ? 'Submit to GoVoicing' : 'Complete Verification First'}
                     </button>
@@ -593,23 +551,18 @@ const SubmissionFlow: React.FC<SubmissionFlowProps> = ({ onSubmit }) => {
 
             {/* Done State */}
             {step === 'done' && (
-                <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '3rem', marginBottom: 'var(--space-md)' }}>✓</div>
-                    <h3 style={{ color: 'var(--truth-emerald)' }}>Evidence Submitted</h3>
-                    <p style={{ margin: 'var(--space-sm) auto var(--space-lg)' }}>
+                <div className="py-8 text-center">
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-success-light">
+                        <svg className="h-8 w-8 text-success" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M4.5 12.75l6 6 9-13.5" /></svg>
+                    </div>
+                    <h3 className="mb-2 text-lg font-black tracking-tight text-success">Evidence Submitted</h3>
+                    <p className="mx-auto mb-6 max-w-sm text-[13px] text-text-body">
                         Your report has been secured. All traces have been wiped.
                     </p>
                     <button
                         onClick={resetFlow}
                         type="button"
-                        style={{
-                            padding: 'var(--space-sm) var(--space-lg)',
-                            background: 'none',
-                            border: 'var(--border-weight) solid var(--border-color)',
-                            borderRadius: 'var(--radius-sm)',
-                            color: 'var(--text-main)',
-                            cursor: 'pointer',
-                        }}
+                        className="btn-secondary text-[13px]"
                     >
                         Submit Another Report
                     </button>
