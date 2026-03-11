@@ -12,10 +12,8 @@
 
 import React, { useState, useCallback } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { API_BASE } from '../../lib/apiConfig';
 import './OpinionComposer.css';
-
-/** API base */
-const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 /** Simple SHA-256 hash for content deduplication */
 async function hashText(text: string): Promise<string> {

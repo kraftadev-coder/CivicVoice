@@ -16,9 +16,7 @@ import OpinionComposer from '../components/feed/OpinionComposer';
 import { mockWitnessPosts, mockOpinionPosts } from '../data/mockFeed';
 import type { FeedLane, WitnessPost, OpinionPost } from '../data/mockFeed';
 import '../styles/home.css';
-
-/** API base: use env variable for production, fallback to empty for dev proxy */
-const API_BASE = import.meta.env.VITE_API_BASE || '';
+import { API_BASE } from '../lib/apiConfig';
 
 /** Map API FeedReport → WitnessPost for the WitnessCard component */
 interface ApiFeedReport {

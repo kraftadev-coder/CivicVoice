@@ -15,9 +15,7 @@ import { Main } from '../components/ui';
 import SubmissionFlow, { type SubmissionData } from '../components/witness/SubmissionFlow';
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/report.css';
-
-/** API base: use env variable for production, fallback to Wrangler dev proxy */
-const API_BASE = import.meta.env.VITE_API_BASE || '';
+import { API_BASE } from '../lib/apiConfig';
 
 interface SubmitState {
     status: 'idle' | 'submitting' | 'success' | 'error';
