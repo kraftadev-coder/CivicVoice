@@ -86,8 +86,13 @@ const WitnessCam: React.FC<WitnessCamProps> = ({ onCapture, onClose }) => {
 
     const startCamera = useCallback(async () => {
         try {
+            // Use simpler constraints — avoid facingMode: 'environment' which causes 
+            // flickering/shaking on some devices (especially laptops with single webcam)
             const constraints: MediaStreamConstraints = {
-                video: mode !== 'audio' ? { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } : false,
+                video: mode !== 'audio' ? {
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 },
+                } : false,
                 audio: mode !== 'photo',
             };
 
@@ -96,7 +101,10 @@ const WitnessCam: React.FC<WitnessCamProps> = ({ onCapture, onClose }) => {
 
             if (videoRef.current && mode !== 'audio') {
                 videoRef.current.srcObject = stream;
-                await videoRef.current.play();
+                // Wait for metadata to load before playing — prevents frame glitches
+                videoRef.current.onloadedmetadata = () => {
+                    videoRef.current?.play().catch(() => {});
+                };
             }
 
             // Setup audio waveform analyser
@@ -160,12 +168,22 @@ const WitnessCam: React.FC<WitnessCamProps> = ({ onCapture, onClose }) => {
     useEffect(() => {
         checkGeoPermission().then(setGeoPermission);
 
+        let geoLocked = false;
         const cleanup = watchPosition(
             (pos: GeoPosition) => {
-                setHasGpsLock(pos.accuracy < 100);
-                setGeoLabel(generateGeoLabel(pos.latitude, pos.longitude));
+                // Only update state once to avoid continuous re-renders
+                // that cause the camera video to shake
+                if (!geoLocked) {
+                    geoLocked = true;
+                    setHasGpsLock(pos.accuracy < 100);
+                    setGeoLabel(generateGeoLabel(pos.latitude, pos.longitude));
+                }
             },
-            () => setHasGpsLock(false)
+            () => {
+                if (!geoLocked) {
+                    setHasGpsLock(false);
+                }
+            }
         );
         geoCleanupRef.current = cleanup;
 

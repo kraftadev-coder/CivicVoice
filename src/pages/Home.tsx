@@ -9,6 +9,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { mockWitnessPosts, mockOpinionPosts } from '../data/mockFeed';
 import type { WitnessPost, OpinionPost } from '../data/mockFeed';
+import { useAuth } from '../contexts/AuthContext';
 import { API_BASE } from '../lib/apiConfig';
 
 /* ─── API Types ─── */
@@ -183,15 +184,21 @@ const OpinionCardNew: React.FC<{ post: OpinionPost }> = ({ post }) => (
 /* ─── Sidebar Widgets ─── */
 
 const SecureReporter: React.FC<{ onPostSuccess?: () => void }> = ({ onPostSuccess }) => {
+    const { session } = useAuth();
     const [text, setText] = useState('');
     const [posting, setPosting] = useState(false);
+    const [postStatus, setPostStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
     const handlePost = async () => {
         if (!text.trim() || posting) return;
         setPosting(true);
+        setPostStatus('idle');
         try {
+            const anonToken = session?.anonToken || '';
             const encoder = new TextEncoder();
-            const hashBuf = await crypto.subtle.digest('SHA-256', encoder.encode(text));
+            // Add timestamp to make each post unique (prevents duplicate hash rejection)
+            const uniqueText = text + '::' + Date.now();
+            const hashBuf = await crypto.subtle.digest('SHA-256', encoder.encode(uniqueText));
             const hashHex = Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
             const form = new FormData();
             form.append('title', text.substring(0, 80));
@@ -200,10 +207,27 @@ const SecureReporter: React.FC<{ onPostSuccess?: () => void }> = ({ onPostSucces
             form.append('lane', 'social');
             form.append('contentHash', hashHex);
             form.append('geoLabel', 'ANONYMOUS • SECURED');
-            await fetch(`${API_BASE}/api/report`, { method: 'POST', body: form });
+            form.append('anonToken', anonToken);
+            const res = await fetch(`${API_BASE}/api/report`, { method: 'POST', body: form });
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                console.warn('Post error:', errData);
+                setPostStatus('error');
+                return;
+            }
             setText('');
-            onPostSuccess?.();
-        } catch (e) { console.warn('Post failed:', e); }
+            setPostStatus('success');
+            // Auto-refresh feed after a short delay to let D1 propagate
+            setTimeout(() => {
+                onPostSuccess?.();
+                // Reset success after showing it briefly
+                setTimeout(() => setPostStatus('idle'), 2000);
+            }, 500);
+        } catch (e) {
+            console.warn('Post failed:', e);
+            setPostStatus('error');
+            setTimeout(() => setPostStatus('idle'), 3000);
+        }
         finally { setPosting(false); }
     };
 
@@ -221,6 +245,19 @@ const SecureReporter: React.FC<{ onPostSuccess?: () => void }> = ({ onPostSucces
                     </div>
                 </div>
             </div>
+
+            {/* Post status feedback */}
+            {postStatus === 'success' && (
+                <div className="mb-3 rounded-xl bg-success/20 px-3 py-2 text-[12px] font-bold text-success">
+                    ✓ Post published successfully!
+                </div>
+            )}
+            {postStatus === 'error' && (
+                <div className="mb-3 rounded-xl bg-red-500/20 px-3 py-2 text-[12px] font-bold text-red-400">
+                    ⚠ Failed to post. Please try again.
+                </div>
+            )}
+
             <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
